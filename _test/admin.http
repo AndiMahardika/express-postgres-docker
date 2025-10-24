@@ -1,3 +1,7 @@
+### root
+GET http://localhost:5000/
+
+### Seed Admin
 POST http://localhost:5000/api/seed/seed-admin
 
 ### Login Admin Web
