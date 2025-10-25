@@ -1,4 +1,6 @@
 #!/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 # ==========================================================
 # 🚀 PostgreSQL Docker Backup Script
 # ----------------------------------------------------------
@@ -10,7 +12,9 @@
 # ==========================================================
 
 # 📦 Muat semua variabel dari file .env (tanpa baris komentar)
-export $(grep -v '^#' /home/andi/kuliah/docker/be-tahfidz-docker-1/.env | xargs)
+set -a
+source /home/andi/kuliah/docker/be-tahfidz-docker-1/.env
+set +a
 
 # 📂 Lokasi proyek dan direktori backup
 PROJECT_DIR="/home/andi/kuliah/docker/be-tahfidz-docker-1"
@@ -29,7 +33,7 @@ mkdir -p "$BACKUP_DIR"
 
 echo "[$DATE] ⏳ Mulai backup database ${POSTGRES_DB} dari container ${DB_SERVICE}..." | tee -a "$LOG_FILE"
 
-# 🧠Jalankan pg_dump di dalam container dan kompres hasilnya
+# 🧠 Jalankan pg_dump di dalam container dan kompres hasilnya
 if docker exec -i "$DB_SERVICE" sh -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_dump -U '$POSTGRES_USER' '$POSTGRES_DB'" | gzip > "$BACKUP_FILE"; then
     echo "[$DATE] ✅ Backup selesai: $BACKUP_FILE" | tee -a "$LOG_FILE"
 else
