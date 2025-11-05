@@ -45,7 +45,7 @@ app.use(
 
 // Sample route
 app.get('/', (req, res) => {
-  res.send('Hello, World from Prisma!');
+  res.send('Hello, Andi from Prisma!');
 });
 
 // Seed route (just run once)
